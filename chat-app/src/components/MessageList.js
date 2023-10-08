@@ -3,6 +3,8 @@ import React from 'react';
 
 // MessageList component to display a list of chat messages
 const MessageList = ({ messages }) => {
+  // Reverse the array of messages so the oldest message appears first
+  const reversedMessages = [...messages].reverse();
   return (
     <div>
       {/* Header for the message list */}
@@ -11,7 +13,7 @@ const MessageList = ({ messages }) => {
       {/* Unordered list to display messages */}
       <ul>
         {/* Mapping through the 'messages' array to create a list item for each message */}
-        {messages.map((message, index) => (
+        {reversedMessages.map((message, index) => (
           <li key={index}>
             {/* Display the timestamp of the message */}
             <span className="timestamp">

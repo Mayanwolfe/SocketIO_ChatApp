@@ -47,9 +47,12 @@ io.on('connection', (socket) => {
     // The client joins the specified room
     socket.join(room);
 
-    // Fetch the last 50 messages for the room from the MongoDB database
+    // Fetch the last 15 messages for the room from the MongoDB database
     // The 'populate' method replaces the 'user' field (which contains a user ID) with the actual username from the user document
-    const messages = await Message.find({ room }).populate('user', 'username').limit(50);
+    const messages = await Message.find({ room })
+    .sort({ timestamp: -1 })  // Sort by timestamp in descending order
+    .limit(15)  // Limit to 15 messages
+    .populate('user', 'username');  // Populate the 'user' field
 
     // Send these messages back to the client so they can see the chat history
     socket.emit('previousMessages', messages);
